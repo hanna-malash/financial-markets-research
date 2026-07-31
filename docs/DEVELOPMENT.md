@@ -114,6 +114,25 @@ Frontend code must not manually duplicate API enums and result schemas when gene
 
 ## Git workflow
 
+### Protected default branch
+
+The default branch must be protected by an active GitHub repository ruleset targeting `main` before the foundation pull request is merged.
+
+Required policy:
+
+- changes reach `main` only through pull requests;
+- at least one approval from a reviewer with write access;
+- stale approvals are dismissed when reviewable changes are pushed;
+- all review conversations are resolved before merge;
+- force pushes are blocked;
+- deletion of `main` is restricted;
+- linear history is required;
+- squash merge is the accepted merge method;
+- permanent bypass actors are not configured;
+- required CI checks are added after the workflows have produced their stable check names.
+
+Local hooks improve feedback speed but do not replace this server-side policy. Hooks can be skipped locally, while the GitHub ruleset and CI remain authoritative.
+
 ### Branches
 
 Create focused branches from current `main`:
@@ -174,6 +193,43 @@ make check
 ```
 
 Force-push is used only for an owned feature branch after confirming that no other contributor depends on its current history.
+
+### Local Git hooks
+
+The Python foundation will add `pre-commit` as a locked development dependency and commit `.pre-commit-config.yaml`.
+
+The pre-commit stage runs fast checks suitable for every commit:
+
+- trailing-whitespace and end-of-file normalization;
+- YAML, JSON, and TOML syntax checks;
+- merge-conflict marker detection;
+- accidental large-file detection;
+- private-key detection;
+- Ruff linting and formatting on changed Python files;
+- repository-specific lightweight contract checks when available.
+
+The pre-push stage runs the complete implemented verification surface through `make check`, including formatting verification, lint, types, and tests. Longer integration or service tests remain in CI if they would make every push impractical.
+
+Installation is exposed through a repository command rather than undocumented local setup:
+
+```bash
+make hooks-install
+```
+
+The implementation is expected to install both stages:
+
+```bash
+uv run pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
+Manual verification remains available:
+
+```bash
+uv run pre-commit run --all-files
+make check
+```
+
+Using `git commit --no-verify` or `git push --no-verify` is reserved for diagnosing hook failures. It does not bypass required pull-request review or CI on `main`.
 
 ## Generated component workflows
 

@@ -28,6 +28,12 @@ fix/duplicate-observations
 
 Do not commit directly to `main`.
 
+## Protected main branch
+
+`main` must be governed by a GitHub ruleset requiring a pull request, one approving review, resolved conversations, linear history, and blocked force pushes and deletion. Permanent bypass actors are not part of the normal workflow.
+
+Required CI checks are attached to the ruleset after their workflow names are stable. Local success does not permit merging when a required GitHub check is missing or failing.
+
 ## Pull requests
 
 Every pull request should include:
@@ -53,6 +59,8 @@ Pull requests should remain atomic enough to review, test, revert, and release i
 - Keep statistical calculations outside frontend code.
 - Avoid loading complete datasets into memory when projection or streaming is available.
 - Emit structured, bounded operational telemetry for long-running behavior.
+- Install the repository `pre-commit` and `pre-push` hooks through `make hooks-install` when the Python foundation provides them.
+- Treat local hooks as feedback and GitHub review plus CI as the authoritative merge gate.
 
 ## Data rules
 
@@ -80,9 +88,12 @@ Review focuses on contract correctness, failure behavior, data leakage, reproduc
 
 ## Merge requirements
 
+- The pull request has at least one approving review from someone other than its author.
+- Review conversations are resolved.
 - Required CI passes.
 - Generated contracts and clients are current.
 - Database migrations and dataset schema changes are reviewed.
 - Documentation matches implemented behavior.
 - No secrets or unapproved data artifacts are present.
 - The change has an observable result or explicit verification artifact.
+- The pull request is squash-merged to preserve linear `main` history.

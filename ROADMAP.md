@@ -8,12 +8,16 @@ The roadmap is organized around complete evidence-producing vertical slices. The
 - [ ] Keep dataset licensing and redistribution policy separate from the code license.
 - [ ] Generate one `uv` Python package and commit the lockfile.
 - [ ] Add Ruff, mypy, pytest, and root Makefile commands.
+- [ ] Add locked `pre-commit` tooling with fast commit hooks, a complete pre-push `make check`, and `make hooks-install`.
 - [ ] Add pull-request CI using the same local commands.
+- [ ] Configure an active GitHub ruleset protecting `main` from direct unreviewed changes, deletion, force pushes, and non-linear history.
+- [ ] Require one approval and resolved review conversations before merge.
+- [ ] Add stable CI check names to the ruleset after the first successful workflow run.
 - [ ] Define the first dataset-manifest schema and deterministic fixture.
 - [ ] Add `.env.example`, secret policy, and reviewed data-directory rules.
 - [ ] Keep documentation consistent with the implemented command surface.
 
-**Gate:** a clean checkout can bootstrap and pass formatting, lint, types, tests, and manifest validation through documented commands.
+**Gate:** a clean checkout can bootstrap, install hooks, and pass formatting, lint, types, tests, and manifest validation through documented commands; `main` rejects direct unreviewed changes and cannot be force-pushed or deleted through the normal workflow.
 
 ## Milestone 1: first public-data research result
 
