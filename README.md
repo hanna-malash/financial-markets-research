@@ -130,7 +130,7 @@ Large datasets are stored outside Git. The repository contains acquisition logic
 The project will expose a stable command surface through the root `Makefile` as capabilities are implemented:
 
 ```bash
-make bootstrap       # install locked Python and Node dependencies
+make bootstrap       # install locked Python dependencies (adds Node once the web milestone starts)
 make dev             # start local infrastructure and applications
 make check           # run formatting, lint, types, and tests
 make data            # acquire or prepare configured datasets
