@@ -160,3 +160,5 @@ The repository is currently establishing its documentation, code license, Python
 ## License and data usage
 
 The project code license and the licenses of individual datasets are separate concerns. No external dataset may be redistributed until its source, terms, attribution requirements, and permitted use have been documented.
+
+See [LICENSE](LICENSE).
